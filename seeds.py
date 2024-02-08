@@ -19,13 +19,13 @@ def load_json():
         data = json.load(file)
 
         for itr in data:
-            authors = Authors(fullname=itr['author'])
+            authors = Authors.objects(fullname=itr['author']).first()
             new_quotes = Qoutes()
             new_quotes.author = authors
             new_quotes.tags = itr['tags']
             new_quotes.quote = itr['quote']
             new_quotes.save()
-        
+
 
 if __name__ == '__main__':
     load_json()

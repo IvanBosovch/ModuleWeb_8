@@ -1,6 +1,6 @@
 from mongoengine import connect
 import configparser
-
+import certifi
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -10,6 +10,8 @@ mongodb_pass = config.get('DB', 'pass')
 db_name = config.get('DB', 'db_name')
 domain = config.get('DB', 'domain')
 
-#mongodb+srv://Ivan:orel2388@cluster0.f3wvaun.mongodb.net/?retryWrites=true&w=majority
+connect(
+    host=f"""mongodb+srv://{mongo_user}:{mongodb_pass}@{domain}/{db_name}?retryWrites=true&w=majority""",
+    tlsCAFile=certifi.where()
 
-connect(host=f"""mongodb+srv://{mongo_user}:{mongodb_pass}@{domain}/{db_name}?retryWrites=true&w=majority""", ssl=False)
+)
